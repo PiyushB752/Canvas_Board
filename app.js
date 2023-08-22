@@ -1,40 +1,40 @@
-const pointCanvas = document.querySelector(".js-point")
-const context = pointCanvas.getContext('2d')
+const paintCanvas = document.querySelector(".js-paint")
+const context = paintCanvas.getContext("2d")
 
 const colorPicker = document.querySelector(".js-color-picker")
 
 context.lineCap = ""
 
-colorPicker.addEventListener("change", event=>{
+colorPicker.addEventListener("change", event =>{
     context.strokeStyle = event.target.value
 })
 
 const lineWidthRange = document.querySelector(".js-line-range")
 const lineWidthLabel = document.querySelector(".js-range-value")
 
-lineWidthRange.addEventListener("input" , event =>{
+lineWidthRange.addEventListener("input", event =>{
     const width = event.target.value
-    lineWidthLabel.innerHTML + width
-    context.lineWidth * width
+    lineWidthLabel.innerHTML = width
+    context.lineWidth = width
 })
 
-let x = 0,y = 0
+let x=0, y=0
 let isMouseDown = false
 
-const stopDrawing = () => {
+const stopDrawing = () =>{
     isMouseDown = false
 }
 
-const startDrawing = () => {
+const startDrawing = (event) =>{
     isMouseDown = true
-    [x,y] = [eventoffsetX , eventoffsetY]
+    [x,y] = [event.offsetX, event.offsetY]
 }
 
 const drawLine = (event) =>{
     if(isMouseDown){
-        const newX = eventoffsetX
-        const newY = eventoffsetY
-        context.beginPath()
+        const newX = event.offsetX
+        const newY = event.offsetY
+        context.beginPath();
         context.moveTo(x,y)
         context.lineTo(newX,newY)
         context.stroke()
@@ -43,7 +43,7 @@ const drawLine = (event) =>{
     }
 }
 
-paintCanva.addEventListener("mousedown",startDrawing)
-paintCanva.addEventListener("mousemove",drawLine)
-paintCanva.addEventListener("mousedup",stopDrawing)
-paintCanva.addEventListener("mousedout",stopDrawing)
+paintCanvas.addEventListener("mousedown", startDrawing)
+paintCanvas.addEventListener("mousemove", drawLine)
+paintCanvas.addEventListener("mouseup", stopDrawing)
+paintCanvas.addEventListener("mouseout",stopDrawing)
